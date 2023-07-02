@@ -4,14 +4,29 @@
 
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-12 mx-auto shadow chat-box rounded">
-    <div class="row">
-      <div class="col-lg-4 ">
-        
+    <div class="row inner">
+      <div class="col-lg-4" style="position: relative;">
+
         {% include 'core/user-list.html' %}
       </div>
       <div class="col-lg-8 chat px-3">
         <div style="background:red">
-          {% comment %} need to display the sender user profile photo here {% endcomment %}
+          <img id="sender-profile-photo" src="../../media/{{ user.profile.image }}" alt="Sender Profile Photo"
+            style="width: 50px; height: 50px; border-radius: 50%;" />
+          <span>{{user.username}}</span>
+          <!-- <div class="chat-header clearfix">
+            <div class="row">
+              <div class="col-lg-6">
+                <a href="" data-toggle="modal" data-target="#view_info">
+                  <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
+                </a>
+                <div class="chat-about">
+                  <h6 class="m-b-0">Aiden Chavez</h6>
+                  <small>Last seen: 2 hours ago</small>
+                </div>
+              </div>
+            </div> -->
+          <!-- </div> -->
         </div>
         <div id="chat-log" class="chat-log scroll">
           {% for chat in chats %}
@@ -65,7 +80,7 @@
     `;
     chatLog.insertAdjacentHTML("beforeend", html);
     lastMessage
-    scrollToBottom(); 
+    scrollToBottom();
   }
 
   chatSocket.onclose = e => {
@@ -83,17 +98,16 @@
 
   messageInput.focus();
   messageSubmit.onclick = e => {
-    e.preventDefault(); 
-  
+    e.preventDefault();
+
     const message = messageInput.value;
-    if(message!="")
-    {
-    chatSocket.send(JSON.stringify({
-      'message': message
-    }));
-    messageInput.value = '';
+    if (message != "") {
+      chatSocket.send(JSON.stringify({
+        'message': message
+      }));
+      messageInput.value = '';
+    }
   }
-}
   chatLog.addEventListener('scroll', function () {
     chatLog.classList.add('scroll');
   });
