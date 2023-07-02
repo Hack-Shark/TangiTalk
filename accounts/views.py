@@ -3,6 +3,8 @@ from django.contrib.auth.views import LoginView
 from django.views.generic import CreateView
 from accounts.forms import LoginForm, RegistrationForm
 from django.contrib.auth import logout
+from django.http import JsonResponse
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -19,3 +21,5 @@ class UserLoginView(LoginView):
 def logout_user(request):
     logout(request)
     return redirect('/accounts/login/')
+
+

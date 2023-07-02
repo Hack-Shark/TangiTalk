@@ -11,10 +11,8 @@
       <div class="col-lg-8 chat px-3">
         <div id="chat-log" class="chat-log scroll">
           {% for chat in chats %}
-            <div 
-              class="message mb-2 {% if chat.sender == request.user %}right{% else %}left{% endif %}"
-            >
-              <div class="avatar">{{chat.sender.username|first|upper}}</div>
+            <div class="message mb-2 {% if chat.sender == request.user %}right{% else %}left{% endif %}">
+              <div class="avatar"data-user="{{ chat.sender.username }}">{{chat.sender.username|first|upper}}</div>
               <span title="{{chat.timestamp}}" class="d-block">{{chat.message}}</span>
             </div>
           {% endfor %}

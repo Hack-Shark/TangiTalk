@@ -50,14 +50,9 @@ class RegistrationForm(UserCreationForm):
             }
         )
     )
-    description = forms.CharField(
-        max_length=255,
-        label=_("Description"),
-        widget=forms.Textarea(attrs={'placeholder': "Description"})
-    )
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2','description')
+        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
     
 
     def __init__(self, *args, **kwargs):
