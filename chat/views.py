@@ -15,6 +15,7 @@ def chat(request, room_name):
         chats = Message.objects.filter(room=room.first()).order_by('timestamp')
     
     context = {
+        'user':user,
         'chats': chats,
         'room_name': room_name,
         'users': User.objects.exclude(username=request.user)
