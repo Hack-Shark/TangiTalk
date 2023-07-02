@@ -11,16 +11,19 @@
       <div class="col-lg-8 chat px-3">
         <div id="chat-log" class="chat-log scroll">
           {% for chat in chats %}
-            <div class="message mb-2 {% if chat.sender == request.user %}right{% else %}left{% endif %}">
-              <div class="avatar"data-user="{{ chat.sender.username }}">{{chat.sender.username|first|upper}}</div>
-              <span title="{{chat.timestamp}}" class="d-block">{{chat.message}}</span>
-            </div>
+          <div class="message mb-2 {% if chat.sender == request.user %}right{% else %}left{% endif %}">
+            <div class="avatar" data-user="{{ chat.sender.username }}">{{chat.sender.username|first|upper}}</div>
+            <span title="{{chat.timestamp}}" class="d-block pb-1 pr-0 m-0">{{chat.message}}
+              <span class="timestamp px-0"
+                style="font-size: x-small;color:gray;margin-left: 10px;">{{chat.timestamp|time:"H:i"}}</span>
+            </span>
+          </div>
           {% endfor %}
         </div>
         <form method="post" class="input-box d-flex w-100">
-            {% csrf_token %}
-            <input type="text" id="chat-message-input" class="form-control" name="" id="">
-            <button id="chat-message-submit" type="submit">Send</button>
+          {% csrf_token %}
+          <input type="text" id="chat-message-input" class="form-control" name="" id="">
+          <button id="chat-message-submit" type="submit">Send</button>
         </form>
       </div>
     </div>
@@ -62,7 +65,7 @@
   }
 
   messageSubmit.disabled = true;
-  messageInput.addEventListener('input', function() {
+  messageInput.addEventListener('input', function () {
     if (messageInput.value.trim() !== '') {
       messageSubmit.disabled = false;
     } else {
@@ -80,10 +83,10 @@
   }
 
 
-  chatLog.addEventListener('scroll', function() {
+  chatLog.addEventListener('scroll', function () {
     chatLog.classList.add('scroll');
   });
-  setTimeout(function() {
+  setTimeout(function () {
     chatLog.classList.remove('scroll');
   }, 1000);
 
