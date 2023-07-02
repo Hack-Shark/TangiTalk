@@ -90,6 +90,7 @@ body {
 .chat-box .chat .chat-log {
   overflow-y: auto;
   padding: 15px 7px;
+  height: 72vh;
 }
 
 .chat-box .chat .chat-log::-webkit-scrollbar {

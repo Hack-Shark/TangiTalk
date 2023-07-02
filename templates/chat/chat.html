@@ -6,9 +6,13 @@
   <div class="col-lg-8 col-md-10 col-sm-12 mx-auto shadow chat-box rounded">
     <div class="row">
       <div class="col-lg-4 ">
+        
         {% include 'core/user-list.html' %}
       </div>
       <div class="col-lg-8 chat px-3">
+        <div style="background:red">
+          {% comment %} need to display the sender user profile photo here {% endcomment %}
+        </div>
         <div id="chat-log" class="chat-log scroll">
           {% for chat in chats %}
           <div class="message mb-2 {% if chat.sender == request.user %}right{% else %}left{% endif %}">
@@ -42,6 +46,9 @@
   let lastMessage = document.getElementById('last-message');
   let roomName = "{{room_name}}";
   let user = "{{request.user.username}}"
+  function scrollToBottom() {
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
 
 
   const chatSocket = new WebSocket(
@@ -58,6 +65,7 @@
     `;
     chatLog.insertAdjacentHTML("beforeend", html);
     lastMessage
+    scrollToBottom(); 
   }
 
   chatSocket.onclose = e => {
@@ -75,14 +83,17 @@
 
   messageInput.focus();
   messageSubmit.onclick = e => {
+    e.preventDefault(); 
+  
     const message = messageInput.value;
+    if(message!="")
+    {
     chatSocket.send(JSON.stringify({
       'message': message
     }));
     messageInput.value = '';
   }
-
-
+}
   chatLog.addEventListener('scroll', function () {
     chatLog.classList.add('scroll');
   });
