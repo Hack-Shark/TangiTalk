@@ -6,35 +6,37 @@
   <div class="col-lg-8 col-md-10 col-sm-12 mx-auto shadow chat-box rounded">
     <div class="row inner">
       <div class="col-lg-4" style="position: relative;">
-
         {% include 'core/user-list.html' %}
       </div>
-      <div class="col-lg-8 chat px-3">
-        <div style="background:red">
-          <img id="sender-profile-photo" src="../../media/{{ user.profile.image }}" alt="Sender Profile Photo"
-            style="width: 50px; height: 50px; border-radius: 50%;" />
-          <span>{{user.username}}</span>
-          <!-- <div class="chat-header clearfix">
+      <div class="col-lg-8 chat px-0">
+        <div style="background: rgb(177, 177, 177);border-radius: 0 5px 0 0;">
+          <div class="chat-header clearfix">
             <div class="row">
               <div class="col-lg-6">
                 <a href="" data-toggle="modal" data-target="#view_info">
-                  <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
+                  {% if user.profile.image %}
+                  <img id="sender-profile-photo" src="../../media/{{ user.profile.image }}"
+                    style="width: 50px; height: 50px; border-radius: 50%;" />
+                  {% else %}
+                  <img id="sender-profile-photo" src="../../media/default-profile-photo.jpg"
+                    style="width: 50px; height: 50px; border-radius: 50%;" />
+                  {% endif %}
                 </a>
                 <div class="chat-about">
-                  <h6 class="m-b-0">Aiden Chavez</h6>
-                  <small>Last seen: 2 hours ago</small>
+                  <h6 style="color: azure; font-weight: bold;margin-bottom: 0;margin-top: 5%;">{{user.username}}</h6>
+                  <small class="text-muted">Last logged on: {{user.last_login|time:"H:i"}}</small>
                 </div>
               </div>
-            </div> -->
-          <!-- </div> -->
+            </div>
+          </div>
         </div>
-        <div id="chat-log" class="chat-log scroll">
+        <div id="chat-log" class="chat-log px-3 scroll">
           {% for chat in chats %}
           <div class="message mb-2 {% if chat.sender == request.user %}right{% else %}left{% endif %}">
             <div class="avatar" data-user="{{ chat.sender.username }}">{{chat.sender.username|first|upper}}</div>
             <span title="{{chat.timestamp}}" class="d-block pb-1 pr-0 m-0">{{chat.message}}
               <span class="timestamp px-0"
-                style="font-size: x-small;color:gray;margin-left: 10px;">{{chat.timestamp|time:"H:i"}}</span>
+                style="font-size: x-small;color:gray;margin-left: 10px;background: none;">{{chat.timestamp|time:"H:i"}}</span>
             </span>
           </div>
           {% endfor %}
