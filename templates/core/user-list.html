@@ -3,7 +3,7 @@
 <h4 class="mt-2 mb-3">Users</h4>
 <div class="user-list">
   {% for user in users %}
-    <a class="user d-block mb-2 py-2 {% if user.username in request.path %}active{% endif %}" href="{% url 'chat' user %}">
+  <a class="user d-block mb-2 py-2 {% if user.username == request.path|slice:"6:"|slice:"-1" %}active{% endif %}" href="{% url 'chat' user %}">
       <div class="d-flex align-items-center gap-2">
         {% if user.profile.image %}
         <img id="sender-profile-photo" src="../../media/{{ user.profile.image }}"
