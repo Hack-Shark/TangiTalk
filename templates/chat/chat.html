@@ -18,13 +18,12 @@
                   <img id="sender-profile-photo" src="../../media/{{ user.profile.image }}"
                     style="width: 50px; height: 50px; border-radius: 50%;" />
                   {% else %}
-                  <img id="sender-profile-photo" src="../../media/default-profile-photo.jpg"
-                    style="width: 50px; height: 50px; border-radius: 50%;" />
+                  <img id="sender-profile-photo" src="../../media/default_profile.png"
+                    style="width: 50px; height: 50px; border-radius: 60%;" />
                   {% endif %}
                 </a>
                 <div class="chat-about">
-                  <h6 style="color: azure; font-weight: bold;margin-bottom: 0;margin-top: 5%;">{{user.username}}</h6>
-                  <small class="text-muted">Last logged on: {{user.last_login|time:"H:i"}}</small>
+                  <h6 style="color: azure; font-weight: bold; font-size: 120%; margin-top:20%">{{ user.username }}</h6>
                 </div>
               </div>
             </div>
@@ -62,14 +61,18 @@
         {% if user.profile.image %}
         <img id="sender-profile-photo" src="../../media/{{ user.profile.image }}" style="height: 25vh;margin-left: 100px;"/>
         {% else %}
-        <img id="sender-profile-photo" src="../../media/default-profile-photo.jpg" style="height: 25vh;margin-left: 100px;"/>
+        <img id="sender-profile-photo" src="../../media/default_profile.png" style="height: 25vh;margin-left: 100px;"/>
         {% endif %}
         <hr>
         <div class="name">First name: {{user.first_name}}</div>
         <div class="name">Last name: {{user.last_name}}</div>
         <div class="status">Last logged on: {{user.last_login|time:"H:i"}}</div>
         <div class="email">e-Mail Id: {{user.email}}</div>
+        {% if user.profile.description %}
         <div class="description">Description: {{user.profile.description}}</div>
+        {% else %}
+        <div class="description">Description:No description</div>
+        {% endif %}
       </div>
     </div>
   </div>
