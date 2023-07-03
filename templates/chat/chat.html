@@ -50,6 +50,30 @@
     </div>
   </div>
 </div>
+<!-- Profile Modal -->
+<div id="profileModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content px-3">
+      <div class="modal-header">
+        <h5 class="modal-title">{{user.username}}</h5>
+      </div>
+      <div class="modal-body">
+        <!-- Profile content goes here -->
+        {% if user.profile.image %}
+        <img id="sender-profile-photo" src="../../media/{{ user.profile.image }}" style="height: 25vh;margin-left: 100px;"/>
+        {% else %}
+        <img id="sender-profile-photo" src="../../media/default-profile-photo.jpg" style="height: 25vh;margin-left: 100px;"/>
+        {% endif %}
+        <hr>
+        <div class="name">First name: {{user.first_name}}</div>
+        <div class="name">Last name: {{user.last_name}}</div>
+        <div class="status">Last logged on: {{user.last_login|time:"H:i"}}</div>
+        <div class="email">e-Mail Id: {{user.email}}</div>
+        <div class="description">Description: {{user.profile.description}}</div>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock content %}
 
@@ -117,7 +141,13 @@
     chatLog.classList.remove('scroll');
   }, 1000);
 
-
+  $(document).ready(function () {
+    // Open profile modal when profile is clicked
+    $('.chat-header img').click(function (e) {
+      e.preventDefault();
+      $('#profileModal').modal('show');
+    });
+  });
 </script>
 
 {% endblock extra_js %}
