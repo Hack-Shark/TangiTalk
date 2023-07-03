@@ -1,16 +1,6 @@
 {% load last_message %}
-<div class="d-flex align-items-center" style="justify-content: space-between;">
-  <span class="mt-2 mb-3">Users</span>
-  <a href="{% url 'profile_detail' request.user.pk %}">
-  {% if request.user.profile.image %}
-      <img id="sender-profile-photo" src="../../media/{{ request.user.profile.image }}"
-          class="rounded-circle ml-2" style="width: 30px; height: 30px;" />
-  {% else %}
-      <img id="sender-profile-photo" src="../../media/default_profile.png"
-          class="rounded-circle ml-2" style="width: 30px; height: 30px;" />
-  {% endif %}
-  </a>
-</div>
+
+<h4 class="mt-2 mb-3">Users</h4>
 <div class="user-list">
   {% for user in users %}
   <a class="user d-block mb-2 py-2 {% if user.username == request.path|slice:"6:"|slice:"-1" %}active{% endif %}" href="{% url 'chat' user %}">
@@ -19,8 +9,8 @@
         <img id="sender-profile-photo" src="../../media/{{ user.profile.image }}"
           style="width: 50px; height: 50px; border-radius: 50%;" />
         {% else %}
-        <img id="sender-profile-photo" src="../../media/default_profile.png"
-          style="width: 50px; height: 50px; border-radius: 60%;" />
+        <img id="sender-profile-photo" src="../../media/default-profile-photo.jpg"
+          style="width: 50px; height: 50px; border-radius: 50%;" />
         {% endif %}
         <div>
           <span class="name d-block">{{user}}</span>
