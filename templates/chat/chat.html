@@ -12,18 +12,18 @@
         <div style="background: rgb(177, 177, 177);border-radius: 0 5px 0 0;">
           <div class="chat-header clearfix">
             <div class="row">
-              <div class="col-lg-6">
+              <div class="col-lg-6" style="display: flex; align-items: center;">
                 <a href="" data-toggle="modal" data-target="#view_info">
                   {% if user.profile.image %}
                   <img id="sender-profile-photo" src="../../media/{{ user.profile.image }}"
-                    style="width: 50px; height: 50px; border-radius: 50%;" />
+                    style="width: 50px; height: 50px; border-radius: 50%; display: block; margin: 0 auto;" />
                   {% else %}
                   <img id="sender-profile-photo" src="../../media/default_profile.png"
-                    style="width: 50px; height: 50px; border-radius: 60%;" />
+                    style="width: 50px; height: 50px; border-radius: 50%; display: block; margin: 0 auto;" />
                   {% endif %}
                 </a>
-                <div class="chat-about">
-                  <h6 style="color: azure; font-weight: bold; font-size: 120%; margin-top:20%">{{ user.username }}</h6>
+                <div class="chat-about" style="margin-left: 10px;">
+                  <h6 style="color: azure; font-weight: bold; margin: 0;">{{ user.username }}</h6>
                 </div>
               </div>
             </div>
@@ -59,9 +59,10 @@
       <div class="modal-body">
         <!-- Profile content goes here -->
         {% if user.profile.image %}
-        <img id="sender-profile-photo" src="../../media/{{ user.profile.image }}" style="height: 25vh;margin-left: 100px;"/>
+        <img id="sender-profile-photo" src="../../media/{{ user.profile.image }}"
+          style="height: 25vh;margin-left: 100px;" />
         {% else %}
-        <img id="sender-profile-photo" src="../../media/default_profile.png" style="height: 25vh;margin-left: 100px;"/>
+        <img id="sender-profile-photo" src="../../media/default_profile.png" style="height: 25vh;margin-left: 100px;" />
         {% endif %}
         <hr>
         <div class="name">First name: {{user.first_name}}</div>
@@ -91,9 +92,11 @@
   let roomName = "{{room_name}}";
   let user = "{{request.user.username}}"
   function scrollToBottom() {
-    chatLog.scrollTop = chatLog.scrollHeight;
+    chatLog.scrollTo({
+      top: chatLog.scrollHeight,
+      behavior: 'smooth'
+    });
   }
-
 
   const chatSocket = new WebSocket(
     `ws://${window.location.host}/ws/chat/${roomName}/`
@@ -101,16 +104,25 @@
 
   chatSocket.onmessage = e => {
     const data = JSON.parse(e.data);
+    var today = new Date();
+    var time = today.getHours() + ":" + today.getMinutes();
     var html = `
       <div class="message mb-2 ${data.sender === user ? 'right' : 'left'}">
-        <div class="avatar">${data.sender[0].toUpperCase()}</div>
-        <span class="d-block">${data.message}</span>
-      </div>
+            <div class="avatar">${data.sender[0].toUpperCase()}</div>
+            <span title="timestamp" class="d-block pb-1 pr-0 m-0">${data.message}
+              <span class="timestamp px-0"
+                style="font-size: x-small;color:gray;margin-left: 10px;background: none;">${time}</span>
+            </span>
+          </div>
     `;
     chatLog.insertAdjacentHTML("beforeend", html);
     lastMessage
     scrollToBottom();
   }
+
+  window.onload = function () {
+    scrollToBottom();
+  };
 
   chatSocket.onclose = e => {
     console.error('Chat socket closed unexpectedly');

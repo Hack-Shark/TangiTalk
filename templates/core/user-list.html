@@ -1,13 +1,13 @@
 {% load last_message %}
 <div class="d-flex align-items-center" style="justify-content: space-between;">
-  <span class="mt-2 mb-3">Users</span>
+  <span class="mt-2 mb-3" style="font-size: x-large;font-weight: bold;color: rgb(81, 81, 81);">Users</span>
   <a href="{% url 'profile_detail' request.user.pk %}">
   {% if request.user.profile.image %}
       <img id="sender-profile-photo" src="../../media/{{ request.user.profile.image }}"
-          class="rounded-circle ml-2" style="width: 30px; height: 30px;" />
+          class="rounded-circle ml-2" style="width: 35px; height: 35px;" />
   {% else %}
       <img id="sender-profile-photo" src="../../media/default_profile.png"
-          class="rounded-circle ml-2" style="width: 30px; height: 30px;" />
+          class="rounded-circle ml-2" style="width: 35px; height: 35px;" />
   {% endif %}
   </a>
 </div>
@@ -24,7 +24,11 @@
         {% endif %}
         <div>
           <span class="name d-block">{{user}}</span>
+          {% if user.last_message %}
           <span id="last-message" class="message d-block">{{ user|last_message:request.user|truncatechars:15 }}</span>
+        {% else %}
+          <span id="last-message" class="message d-block">Last message goes here</span>
+        {% endif %}        
         </div>
       </div>
     </a>
